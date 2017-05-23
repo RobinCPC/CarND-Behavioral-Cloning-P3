@@ -20,7 +20,7 @@ sio = socketio.Server()
 app = Flask(__name__)
 model = None
 prev_image_array = None
-
+import cv2
 
 class SimplePIController:
     def __init__(self, Kp, Ki):
@@ -60,12 +60,17 @@ def telemetry(sid, data):
         # The current image from the center camera of the car
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
+        #image = cv2.imread(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
-        steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
+        img = np.zeros([160,320,3], dtype=np.uint8)
+        img[:,:,1] = image_array[:,:,1]
+        img[:,:,0] = image_array[:,:,2]
+        img[:,:,2] = image_array[:,:,0]
+        steering_angle = float(model.predict(img[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
 
-        print(steering_angle, throttle)
+        print("Steering: {:.3f} degree, Throttle: {:.2f}".format(steering_angle * 25., throttle))
         send_control(steering_angle, throttle)
 
         # save frame
