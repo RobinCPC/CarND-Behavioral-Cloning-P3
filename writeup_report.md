@@ -1,9 +1,5 @@
 # **Behavioral Cloning**
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Behavioral Cloning Project**
@@ -144,11 +140,9 @@ steer when the car is more closed or far away from the lane edge. In order to us
 steering angle data for the left and right image. In the lecture, it is suggested to derive the steering angle from center images. For instance, if center image 
 provide a left-turn angle, then the left image should provide a less left-turn angle. These images show what a recovery looks like starting from the left image to center image to right image:
 
-![alt text][image3]
-
-![alt text][image4]
-
-![alt text][image5]
+| Left Camera           |     Center Camera     |    Right Camera       |
+|:---------------------:|:---------------------:|:---------------------:|
+| ![alt text][image3]   | ![alt text][image4]   |  ![alt text][image5]  |
 
 Then I repeated this process on track two in order to get more data points.
 
@@ -156,8 +150,9 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 to run the first track counterclockwise (CCW), we will get a left-turn bias data. Therefore, flipping images could unbias the dataset. For example, here is an 
 image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
+|   Original Image    |     Flipped Image     |
+|:-------------------:|:---------------------:|
+| ![alt text][image6] | ![alt text][image7]   |
 
 After the collection process, I had about 70,000 number of data points. I then preprocessed this data by normalizing image inside the model.
 I finally randomly shuffled the data set and put 10% of the data into a validation set. I used this training data for training the model. The validation set 
